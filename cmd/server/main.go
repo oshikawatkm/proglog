@@ -2,7 +2,6 @@ package main
 
 import (
 	"log"
-	"oshikawatkm/proglog/internal/server"
 
 	"github.com/oshikawatkm/proglog/internal/server"
 )
