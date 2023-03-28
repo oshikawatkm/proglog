@@ -109,3 +109,38 @@ type CommitLog interface {
 	Append(*api.Record) (uint64, error)
 	Read(uint64) (*api.Record, error)
 }
+
+
+type Authorizer interface {
+	Authorize(subject, object, action string) error
+}
+
+func authenticate(ctx context.Context) (context.Context, error) {
+	peer, ok := peer.FromContext(ctx)
+	if !ok {
+		return ctx, status.New(
+			codes.Unknown,
+			"couldn't find peer info"
+		).Err()
+	}
+
+	if peer.AuthInfo == nil {
+		return ctx, status.New(
+			codes.Unauthenticated,
+			"no transport security being used",
+		).Err()
+	}
+
+	tlsInfo := peer.AuthInfo.(credentials.TLSInfo)
+	subject := tlsInfo.State.VerifiableChains[0][0].Subject.CommonName
+	ctx = context.WithValue(ctx, subjectContextKey{}, subject)
+
+	return ctx, nil
+} 
+
+
+func subject(ctx context.Context) string {
+	return ctx.Value(subjectContextKey{}).(string)
+}
+
+type subjectContextKey struct {}
