@@ -40,7 +40,10 @@ require (
 	github.com/googleapis/enterprise-certificate-proxy v0.2.3 // indirect
 	github.com/gorilla/mux v1.8.0
 	github.com/grpc-ecosystem/go-grpc-middleware v1.4.0
-	github.com/stretchr/testify v1.8.1
+	github.com/hashicorp/raft v1.4.0
+	github.com/hashicorp/serf v0.10.1
+	github.com/stretchr/testify v1.8.2
+	github.com/travisjeffery/go-dynaport v1.0.0
 	go.opencensus.io v0.23.0
 	go.uber.org/zap v1.21.0
 	golang.org/x/net v0.7.0 // indirect
